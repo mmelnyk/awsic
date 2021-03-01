@@ -1,4 +1,6 @@
-on: [release]
+on:
+  release:
+    types: [published]
 name: Golang Build and Upload Release Asset
 jobs:
   build:
@@ -31,8 +33,12 @@ jobs:
       if: matrix.go_os != 'windows'
       run: zip awsic.zip bin/*
     - name: Upload Release Asset
+      id: upload-release-asset
+      uses: actions/upload-release-asset@v1.0.1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-          mv awsic.zip awsic-${{ matrix.go_arch }}-${{ matrix.go_os }}-${{github.event.release.tag_name}}.zip
-          gh release upload ${{ github.event.release.upload_url }} awsic-${{ matrix.go_arch }}-${{ matrix.go_os }}-${{github.event.release.tag_name}}.zip
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./awsic.zip
+        asset_name: awsic-${{ matrix.go_arch }}-${{ matrix.go_os }}-${{github.event.release.tag_name}}.zip
+        asset_content_type: application/zip
