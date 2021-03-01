@@ -1,0 +1,13 @@
+# Project parameters
+GOMODULE = go.melnyk.org/awsic
+
+# List of directories with binaries code
+BINARIES = \
+	./cmd/awsic
+
+# Docker registry host name
+DOCKER_REGISTRY=localhost
+
+# Mapping docker files to required docker images
+DOCKER_IMAGE= \
+	Dockerfile&template_app
