@@ -1,5 +1,4 @@
 on: [release]
-
 name: Golang Build and Upload Release Asset
 jobs:
   build:
